@@ -470,7 +470,26 @@
       const testimonialText = document.getElementById("testimonial-text");
       testimonialText.innerHTML = `"${testimonials[currentTestimonial].text}"<span>${testimonials[currentTestimonial].author}</span>`;
     }
-  </script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init("n6CCzl5EJg3TPOdg4"); // ✅ Your Public Key
+  })();
+
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm('service_gal3lz3', 'template_00v8i6v', this)
+      .then(function(response) {
+        alert("Message sent successfully!");
+        document.getElementById('contact-form').reset();
+      }, function(error) {
+        alert("Failed to send message. Please try again.");
+        console.error("EmailJS Error:", error);
+      });
+  });
+</script>
+
 </body>
 </html>
 
