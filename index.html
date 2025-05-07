@@ -414,13 +414,16 @@
 
   <section id="contact" class="contact-section">
     <h2>Contact Us</h2>
-    <form class="contact-form">
+    <form class="contact-form" action="https://getform.io/f/bjjmnqmb" method="POST">
       <input type="text" name="firstName" placeholder="First Name" required>
       <input type="text" name="lastName" placeholder="Last Name" required>
       <input type="email" name="email" placeholder="Email" required>
       <textarea name="message" placeholder="Your Message" required></textarea>
       <button type="submit">Send Message</button>
     </form>
+    
+    
+    
   </section>
 
   <section id="reviews" class="reviews-section">
@@ -470,25 +473,37 @@
       const testimonialText = document.getElementById("testimonial-text");
       testimonialText.innerHTML = `"${testimonials[currentTestimonial].text}"<span>${testimonials[currentTestimonial].author}</span>`;
     }
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  (function() {
-    emailjs.init("n6CCzl5EJg3TPOdg4"); // ✅ Your Public Key
-  })();
+    
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
 
-  document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+  const data = {
+    firstName: this.firstName.value,
+    lastName: this.lastName.value,
+    email: this.email.value,
+    message: this.message.value
+  };
 
-    emailjs.sendForm('service_gal3lz3', 'template_00v8i6v', this)
-      .then(function(response) {
-        alert("Message sent successfully!");
-        document.getElementById('contact-form').reset();
-      }, function(error) {
-        alert("Failed to send message. Please try again.");
-        console.error("EmailJS Error:", error);
-      });
+  fetch("https://script.google.com/macros/s/AKfycbzlC_lLefmdFifS5KFAKEUL2a5PUn8MfKSL6cNrJo5l1sivdzICfGnlMdonl2f9jdPK/exec", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => response.text())
+  .then(responseText => {
+    alert("Message sent successfully!");
+    this.reset();
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("There was an error sending your message.");
   });
+});
 </script>
+
+
 
 </body>
 </html>
